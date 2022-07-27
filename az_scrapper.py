@@ -1,9 +1,9 @@
-from gettext import gettext
-from urllib import request
-import requests
+
+
 from bs4 import BeautifulSoup
-import lxml
-import urllib.request
+from openpyxl.workbook import Workbook
+import requests
+import pandas as pd
 import os
 
 """URLs validas de prueba"""
@@ -72,7 +72,13 @@ def get_items(name):
     search_query = name.replace(" ","+")
     url = "https://www.amazon.com/s?k={0}".format(search_query)
 
-    items = []
+    product_names=[]
+    ratings=[]
+    ratings_count=[]
+    prices=[]
+    product_urls=[]
+
+    # BUSCA EN 10 PAGINAS
     for i in range(1,11):
         print('Procesando {0}...'.format(url + '&page={0}'.format(i)))
         response = requests.get(url + '&page={0}'.format(i), headers=headers)
@@ -80,13 +86,15 @@ def get_items(name):
         
         resultados = soup.find_all('div', {'class':'s-result-item', 'data-component-type':'s-search-result'})
         
+        # ITERAR EN CADA ARTICULO DE CADA PAGINA
         for result in resultados:
             # product_name = result.h2.text
             product_name = result.find('span', {'class':'a-text-normal'}).text 
             
             try:
                 rating = result.find('i', {'class':'a-icon'}).text
-                rating_count = result.find('span', {'class':'a-size-base'}).text
+                # rating_count = result.find('span', {'class':'a-size-base'}).text
+                
             except AttributeError:
                 continue
 
@@ -94,13 +102,27 @@ def get_items(name):
                 price = (result.find('span',{'class':'a-offscreen'}).text)[1:]
                 
                 price = float(price)
-                product_url = 'https://www.amazon.com' + result.h2.a['href']
                 
-                # items.append([product_name, rating, rating_count, price, product_url])
-                print(product_url)
+                product_url = 'https://www.amazon.com' + result.h2.a['href']
+                product_names.append(product_name)
+                ratings.append(rating)
+                # ratings_count.append(ratings_count)
+                prices.append(price)
+                product_urls.append(product_url) 
             except AttributeError:
                 continue
-            break
+        
+        break
+    #GUARDAR LOS RESULTADOS EN UNA HOJA EXCEL
+    data = {
+            'Nombres de Productos':product_names,
+            'Ratings':ratings,
+            # 'rating count':ratings_count,
+            'Prices':prices,
+            'URL Producto':product_urls
+            }
+    df = pd.DataFrame(data=data)
+    df.to_excel('{}.xlsx'.format(search_query), sheet_name='sheet1', index=False)
 
 get_items(name)
     
