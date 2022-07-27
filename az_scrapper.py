@@ -6,6 +6,8 @@ import lxml
 import urllib.request
 import os
 
+"""URLs validas de prueba"""
+
 # url = 'https://www.amazon.com/SteelSeries-Teclado-mec%C3%A1nico-compacto-juegos/dp/B07TGPN6P2?psc=1&pd_rd_w=0sbx9&content-id=amzn1.sym.c9b3a448-7c3c-4399-ac60-2bdc98844f72&pf_rd_p=c9b3a448-7c3c-4399-ac60-2bdc98844f72&pf_rd_r=179TVCBXXEB4ZVSJAP0S&pd_rd_wg=vnZF6&pd_rd_r=822c40fb-158e-4506-a5b8-d3a26ae9ac07&ref_=sspa_dk_rhf_detail_pt_sub_3&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyTVZBMjNHV09ZNTZEJmVuY3J5cHRlZElkPUEwMDA4MzYxMUUzMk1TNTA0NEJaViZlbmNyeXB0ZWRBZElkPUEwMjMzOTY2VUlKNjlRWE9KWTY0JndpZGdldE5hbWU9c3BfcmhmX2RldGFpbCZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU='
 
 # url = 'https://www.amazon.com/-/es/T-fal-Utensilios-cocina-Titanium-Antiadherente/dp/B00TQJWF1I/ref=sr_1_1?_encoding=UTF8&content-id=amzn1.sym.b97b4e6b-b418-46fa-99e0-99e05eefed1c&crid=N2BWR2PWI4FA&keywords=kitchen+essentials&pd_rd_r=df9d9625-6e5b-47c9-990b-d17b907e23e8&pd_rd_w=JyhgQ&pd_rd_wg=RIrOn&pf_rd_p=b97b4e6b-b418-46fa-99e0-99e05eefed1c&pf_rd_r=9JNRXRK3T3XZ4CMJT5JJ&qid=1658504582&sprefix=kitchen+%2Caps%2C285&sr=8-1'
