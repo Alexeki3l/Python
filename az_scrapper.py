@@ -80,7 +80,7 @@ def get_items(search):
 
     product_names=[]
     ratings=[]
-    ratings_count=[]
+    # ratings_count=[]
     prices=[]
     product_urls=[]
 
