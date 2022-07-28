@@ -1,5 +1,5 @@
 
-
+from time import sleep
 from bs4 import BeautifulSoup
 from openpyxl.workbook import Workbook
 import requests
@@ -22,7 +22,7 @@ url = 'https://www.amazon.com/-/es/Phanteks-NEON-Digital-Strip-PH-NELEDKT_M1/dp/
 def get_link_data(url):
 
     """Obtiene el nombre, precio y la imagen de un Articulo en Amazon
-        por una URL que se le envia por parametro"""
+        por una URL que se le pase por parametro"""
 
     headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
@@ -60,16 +60,22 @@ def get_link_data(url):
 
     return name, price
 
-name = input("¿Que articulos quiere buscar?-->")
+search = input("¿Que articulos quiere buscar?-->")
 
-def get_items(name):
+def get_items(search):
+
+    """
+    Obtiene los nombres, las clasificaciones, los precios y las url de los productos
+    encontrados segun el criterio de busqueda. Este criterio sera el string que se pase por
+    parametro 
+    """
 
     headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36",
     "Accept-Language":"en",
     }
 
-    search_query = name.replace(" ","+")
+    search_query = search.replace(" ","+")
     url = "https://www.amazon.com/s?k={0}".format(search_query)
 
     product_names=[]
@@ -89,6 +95,7 @@ def get_items(name):
         # ITERAR EN CADA ARTICULO DE CADA PAGINA
         for result in resultados:
             # product_name = result.h2.text
+            
             product_name = result.find('span', {'class':'a-text-normal'}).text 
             
             try:
@@ -112,8 +119,8 @@ def get_items(name):
             except AttributeError:
                 continue
         
-        break
-    #GUARDAR LOS RESULTADOS EN UNA HOJA EXCEL
+    sleep(1.5)
+    # GUARDAR LOS RESULTADOS EN UNA HOJA EXCEL
     data = {
             'Nombres de Productos':product_names,
             'Ratings':ratings,
@@ -124,7 +131,7 @@ def get_items(name):
     df = pd.DataFrame(data=data)
     df.to_excel('{}.xlsx'.format(search_query), sheet_name='sheet1', index=False)
 
-get_items(name)
+get_items(search)
     
 
 
