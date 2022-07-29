@@ -80,7 +80,7 @@ def get_items(search):
 
     product_names=[]
     ratings=[]
-    # ratings_count=[]
+    ratings_count=[]
     prices=[]
     product_urls=[]
 
@@ -100,7 +100,7 @@ def get_items(search):
             
             try:
                 rating = result.find('i', {'class':'a-icon'}).text
-                # rating_count = result.find('span', {'class':'a-size-base'}).text
+                rating_count = result.find_all('span', {'aria-label':True})[1].text
                 
             except AttributeError:
                 continue
@@ -113,9 +113,10 @@ def get_items(search):
                 product_url = 'https://www.amazon.com' + result.h2.a['href']
                 product_names.append(product_name)
                 ratings.append(rating)
-                # ratings_count.append(ratings_count)
+                ratings_count.append(rating_count)
                 prices.append(price)
                 product_urls.append(product_url) 
+                
             except AttributeError:
                 continue
         
@@ -124,7 +125,7 @@ def get_items(search):
     data = {
             'Nombres de Productos':product_names,
             'Ratings':ratings,
-            # 'rating count':ratings_count,
+            'rating count':ratings_count,
             'Prices':prices,
             'URL Producto':product_urls
             }
